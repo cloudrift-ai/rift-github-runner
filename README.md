@@ -15,38 +15,30 @@ Serverless GCP controller for ephemeral GitHub Actions runners on [CloudRift](ht
 
 ### Prerequisites
 
-- GCP project with billing enabled
+- GCP project with billing enabled, `gcloud` CLI authenticated
+- [Terraform](https://www.terraform.io/) installed
 - [CloudRift](https://cloudrift.ai) account and API key
 - GitHub PAT with `administration:write` scope (for runner registration)
 
-### Deploy with Terraform
+### Deploy
 
 ```bash
-cd deploy/terraform
-
-# Store secrets
+# 1. Store secrets in GCP Secret Manager (one-time)
 echo -n "your-cloudrift-api-key" | gcloud secrets versions add cloudrift-runner-api-key --data-file=-
 echo -n "ghp_your_github_pat" | gcloud secrets versions add cloudrift-runner-github-pat --data-file=-
 echo -n "your-webhook-secret" | gcloud secrets versions add cloudrift-runner-webhook-secret --data-file=-
 
-# Package source
-cd ../..
-zip -r /tmp/cloudrift-runner.zip src/ pyproject.toml
+# 2. Initialize Terraform (one-time)
+make deploy-init
 
-# Deploy
-cd deploy/terraform
-terraform init
-terraform apply \
-  -var="project_id=my-gcp-project" \
-  -var="source_zip_path=/tmp/cloudrift-runner.zip" \
-  -var="source_hash=$(sha256sum /tmp/cloudrift-runner.zip | cut -d' ' -f1)"
+# 3. Deploy (zips source and runs terraform apply)
+make deploy
 ```
 
-### Deploy with gcloud CLI
+Terraform will prompt for `project_id`. To skip the prompt, create `deploy/terraform/terraform.tfvars`:
 
-```bash
-export GCP_PROJECT=my-gcp-project
-./deploy/gcloud/deploy.sh
+```hcl
+project_id = "my-gcp-project"
 ```
 
 ### Configure GitHub Webhook
@@ -118,11 +110,10 @@ runs-on:
 ## Development
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -e ".[dev]"
-pytest -vv
-ruff check src/ tests/
+make setup        # create venv + install deps
+make test         # run tests
+make lint         # check linting + formatting
+make fmt          # auto-fix formatting
 ```
 
 ## License
