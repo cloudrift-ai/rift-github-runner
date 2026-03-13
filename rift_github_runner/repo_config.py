@@ -29,20 +29,18 @@ def resolve_job_config(
     repo: str,
     ref: str,
     job_name: str,
-    default_with_public_ip: bool,
 ) -> ResolvedJobConfig | None:
     content = github.fetch_file(owner, repo, CONFIG_PATH, ref)
     if content is None:
         logger.warning("No %s found in %s/%s — cannot provision runner", CONFIG_PATH, owner, repo)
         return None
 
-    return _parse_config(content, job_name, default_with_public_ip)
+    return _parse_config(content, job_name)
 
 
 def _parse_config(
     raw: str,
     job_name: str,
-    default_with_public_ip: bool,
 ) -> ResolvedJobConfig:
     data = yaml.safe_load(raw) or {}
     defaults = data.get("defaults", {})
@@ -50,7 +48,7 @@ def _parse_config(
 
     base_instance_type = defaults.get("instance_type")
     base_image_url = defaults.get("image_url")
-    base_public_ip = defaults.get("with_public_ip", default_with_public_ip)
+    base_public_ip = defaults.get("with_public_ip", False)
 
     job_overrides = jobs.get(job_name, {})
     instance_type = job_overrides.get("instance_type", base_instance_type)

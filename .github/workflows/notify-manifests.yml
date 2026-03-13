@@ -1,0 +1,33 @@
+name: Notify rift-manifests
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Docker Image"]
+    types: [completed]
+
+jobs:
+  update-manifests:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: cloudriftai/rift-manifests
+          token: ${{ secrets.MANIFESTS_PAT }}
+
+      - name: Update preview environment tag
+        run: |
+          SHA="${{ github.event.workflow_run.head_sha }}"
+          SHORT_SHA="${SHA:0:7}"
+          sed -i "s/^GITHUB_RUNNER_TAG=.*/GITHUB_RUNNER_TAG=sha-${SHORT_SHA}/" environments/preview.env
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add environments/preview.env
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: bump github-runner to sha-${SHA:0:7}"
+          git push
+        env:
+          SHA: ${{ github.event.workflow_run.head_sha }}
