@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import responses
 
-from cloudrift_runners.cloudrift_client import CloudRiftClient
+from rift_github_runner.cloudrift_client import CloudRiftClient
 
 BASE = "https://api.test.cloudrift.ai"
 

@@ -226,5 +226,5 @@ def _handle_completed(cloudrift, state, event):
 
 
 def get_app() -> Flask:
-    """Entry point for gunicorn: `gunicorn 'cloudrift_runners.main:get_app()'`."""
+    """Entry point for gunicorn: `gunicorn 'rift_github_runner.main:get_app()'`."""
     return create_app()

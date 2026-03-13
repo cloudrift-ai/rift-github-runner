@@ -6,7 +6,7 @@ import json
 
 import pytest
 
-from cloudrift_runners.webhook import WebhookError, parse_event, verify_signature
+from rift_github_runner.webhook import WebhookError, parse_event, verify_signature
 from tests.conftest import make_workflow_job_payload
 
 

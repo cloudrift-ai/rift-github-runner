@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from cloudrift_runners.config import Config
+from rift_github_runner.config import Config
 
 
 @pytest.fixture(autouse=True)

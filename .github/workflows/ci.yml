@@ -19,10 +19,10 @@ jobs:
         run: pip install -e ".[dev]"
 
       - name: Lint
-        run: ruff check cloudrift_runners/ tests/
+        run: ruff check rift_github_runner/ tests/
 
       - name: Format check
-        run: ruff format --check cloudrift_runners/ tests/
+        run: ruff format --check rift_github_runner/ tests/
 
       - name: Test
         run: pytest -vv

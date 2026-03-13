@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from cloudrift_runners.repo_config import ConfigError, resolve_job_config
+from rift_github_runner.repo_config import ConfigError, resolve_job_config
 
 
 def _mock_github(file_content: str | None) -> MagicMock:

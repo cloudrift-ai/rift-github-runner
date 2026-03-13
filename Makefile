@@ -30,12 +30,12 @@ test:
 	.venv/bin/pytest -vv
 
 lint:
-	.venv/bin/ruff check cloudrift_runners/ tests/
-	.venv/bin/ruff format --check cloudrift_runners/ tests/
+	.venv/bin/ruff check rift_github_runner/ tests/
+	.venv/bin/ruff format --check rift_github_runner/ tests/
 
 fmt:
-	.venv/bin/ruff format cloudrift_runners/ tests/
-	.venv/bin/ruff check --fix cloudrift_runners/ tests/
+	.venv/bin/ruff format rift_github_runner/ tests/
+	.venv/bin/ruff check --fix rift_github_runner/ tests/
 
 docker-build:
 	docker compose build

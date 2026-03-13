@@ -4,7 +4,7 @@ import base64
 
 import responses
 
-from cloudrift_runners.github_client import GitHubClient
+from rift_github_runner.github_client import GitHubClient
 
 
 class TestCreateJitRunner:

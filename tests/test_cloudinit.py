@@ -1,4 +1,4 @@
-from cloudrift_runners.cloudinit import generate_cloudinit_script
+from rift_github_runner.cloudinit import generate_cloudinit_script
 
 
 def test_script_contains_jitconfig():

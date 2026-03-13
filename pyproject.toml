@@ -3,7 +3,7 @@ requires = ["setuptools>=68", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cloudrift-runners"
+name = "rift-github-runner"
 version = "0.1.0"
 description = "Docker-compose deployable controller for ephemeral GitHub Actions runners on CloudRift VMs"
 readme = "README.md"
@@ -26,7 +26,7 @@ dev = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["cloudrift_runners*"]
+include = ["rift_github_runner*"]
 
 [tool.ruff]
 target-version = "py311"

@@ -7,7 +7,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from cloudrift_runners.repo_config import ResolvedJobConfig
+from rift_github_runner.repo_config import ResolvedJobConfig
 from tests.conftest import make_workflow_job_payload
 
 
@@ -43,7 +43,7 @@ def _patch_deps(config):
     """Patch all external dependencies for main handler tests."""
     with (
         patch(
-            "cloudrift_runners.main.resolve_job_config", return_value=_DEFAULT_JOB_CONFIG
+            "rift_github_runner.main.resolve_job_config", return_value=_DEFAULT_JOB_CONFIG
         ) as mock_resolve,
     ):
         cr_inst = MagicMock()
@@ -70,7 +70,7 @@ def _patch_deps(config):
 
 
 def _call_webhook(deps, req):
-    from cloudrift_runners.main import handle_webhook
+    from rift_github_runner.main import handle_webhook
 
     return handle_webhook(
         req,

@@ -4,7 +4,7 @@ import datetime
 
 from sqlalchemy import create_engine
 
-from cloudrift_runners.state import StateStore
+from rift_github_runner.state import StateStore
 
 
 def _make_store():
@@ -65,7 +65,7 @@ def test_find_stale_jobs():
     assert len(stale) == 0
 
     # Backdate the record
-    from cloudrift_runners.state import JobRow, Session
+    from rift_github_runner.state import JobRow, Session
 
     with Session(ss._engine) as session:
         row = session.get(JobRow, 100)
@@ -82,7 +82,7 @@ def test_delete_old_jobs():
     ss.try_create_job(job_id=100, instance_id="inst-abc", run_id=200, repo="r", labels=[])
 
     # Backdate the record
-    from cloudrift_runners.state import JobRow, Session
+    from rift_github_runner.state import JobRow, Session
 
     with Session(ss._engine) as session:
         row = session.get(JobRow, 100)
