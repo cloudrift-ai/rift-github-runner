@@ -8,7 +8,6 @@ from dataclasses import dataclass
 class Config:
     cloudrift_api_key: str
     cloudrift_api_url: str
-    cloudrift_with_public_ip: bool
     runner_label: str
     max_runner_lifetime_minutes: int
     github_pat: str
@@ -19,8 +18,6 @@ class Config:
         return cls(
             cloudrift_api_key=_require("CLOUDRIFT_API_KEY"),
             cloudrift_api_url=os.environ.get("CLOUDRIFT_API_URL", "https://api.cloudrift.ai"),
-            cloudrift_with_public_ip=os.environ.get("CLOUDRIFT_WITH_PUBLIC_IP", "false").lower()
-            == "true",
             runner_label=os.environ.get("RUNNER_LABEL", "cloudrift"),
             max_runner_lifetime_minutes=int(os.environ.get("MAX_RUNNER_LIFETIME_MINUTES", "120")),
             github_pat=_require("GITHUB_PAT"),

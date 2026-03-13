@@ -11,7 +11,6 @@ def _clean_env(monkeypatch):
     for key in [
         "CLOUDRIFT_API_KEY",
         "CLOUDRIFT_API_URL",
-        "CLOUDRIFT_WITH_PUBLIC_IP",
         "RUNNER_LABEL",
         "MAX_RUNNER_LIFETIME_MINUTES",
         "GITHUB_PAT",
@@ -25,7 +24,6 @@ def config() -> Config:
     return Config(
         cloudrift_api_key="test-api-key",
         cloudrift_api_url="https://api.test.cloudrift.ai",
-        cloudrift_with_public_ip=False,
         runner_label="cloudrift",
         max_runner_lifetime_minutes=120,
         github_pat="ghp_testtoken",

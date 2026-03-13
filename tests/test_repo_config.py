@@ -15,7 +15,7 @@ def _mock_github(file_content: str | None) -> MagicMock:
 
 def test_no_config_file_returns_none():
     gh = _mock_github(None)
-    result = resolve_job_config(gh, "o", "r", "sha", "test-job", default_with_public_ip=False)
+    result = resolve_job_config(gh, "o", "r", "sha", "test-job")
     assert result is None
 
 
@@ -26,7 +26,7 @@ defaults:
   image_url: https://example.com/a100.img
 """
     gh = _mock_github(yaml_content)
-    cfg = resolve_job_config(gh, "o", "r", "sha", "some-job", default_with_public_ip=False)
+    cfg = resolve_job_config(gh, "o", "r", "sha", "some-job")
     assert cfg.instance_type == "gpu.a100-80"
     assert cfg.image_url == "https://example.com/a100.img"
     assert cfg.with_public_ip is False
@@ -42,7 +42,7 @@ jobs:
     instance_type: gpu.a100-80
 """
     gh = _mock_github(yaml_content)
-    cfg = resolve_job_config(gh, "o", "r", "sha", "gpu-test", default_with_public_ip=False)
+    cfg = resolve_job_config(gh, "o", "r", "sha", "gpu-test")
     assert cfg.instance_type == "gpu.a100-80"
     assert cfg.image_url == "https://example.com/default.img"
 
@@ -57,7 +57,7 @@ jobs:
     instance_type: gpu.a100-80
 """
     gh = _mock_github(yaml_content)
-    cfg = resolve_job_config(gh, "o", "r", "sha", "other-job", default_with_public_ip=False)
+    cfg = resolve_job_config(gh, "o", "r", "sha", "other-job")
     assert cfg.instance_type == "gpu.h100-80"
 
 
@@ -68,7 +68,7 @@ defaults:
 """
     gh = _mock_github(yaml_content)
     with pytest.raises(ConfigError, match="instance_type not specified"):
-        resolve_job_config(gh, "o", "r", "sha", "test-job", default_with_public_ip=False)
+        resolve_job_config(gh, "o", "r", "sha", "test-job")
 
 
 def test_missing_image_url_raises():
@@ -78,4 +78,4 @@ defaults:
 """
     gh = _mock_github(yaml_content)
     with pytest.raises(ConfigError, match="image_url not specified"):
-        resolve_job_config(gh, "o", "r", "sha", "test-job", default_with_public_ip=False)
+        resolve_job_config(gh, "o", "r", "sha", "test-job")

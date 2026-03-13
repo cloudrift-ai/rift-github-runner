@@ -134,7 +134,6 @@ def _handle_queued(config, cloudrift, github, state, event):
             repo=event.repo_name,
             ref=event.head_sha,
             job_name=event.job_name,
-            default_with_public_ip=config.cloudrift_with_public_ip,
         )
     except ConfigError as e:
         logger.warning("Config error for job %d: %s", event.job_id, e)
